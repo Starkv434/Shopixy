@@ -1,0 +1,89 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+{% block title %}Search{% endblock title %}
+
+{% block style %}
+<style>
+    body{
+        background:#FBFCFC;  
+    }
+
+    .section{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        height: 30vh;
+        justify-content:center;
+    }
+    
+    .box{
+        position:relative;
+        top: 50%;
+        min-height:100vh;
+    }
+
+    .prod_box{
+        display:flex;
+        justify-content:center;
+        position: relative;
+        margin-top: 17%;
+        width:100vw;
+    }
+
+    footer{
+        position: relative;
+        top: 310px;
+    }
+
+</style>
+{% endblock style %}
+{% block section %}
+<div class="section">
+    <div class="container box my-5">
+        {% if product %}
+            <div class="row">
+                <div class="col-sm-8 prod_box">
+                    <div class="row">
+                            {% for prod in product %}
+                                <div class="col-sm-4 text-center mb-4 hover-shadow">
+                                    <a href="{% url 'product' uid=prod.uid %}">
+                                        <div>
+                                            <img src="{{prod.prod_image.url}}" alt="image" width="180px" height="100px">
+                                            <div class="fw-bold">{{prod.product_name}}</div>
+                                            <div class="fw-bold text-danger">
+                                                {% if prod.discounted_price == 0.0 %} 
+                                                    Rs.{{prod.selling_price}} 
+                                                {% else %} 
+                                                    Rs.{{prod.discounted_price}}/-
+                                                <small class="fw-light text-danger text-decoration-line-through">
+                                                    {{prod.selling_price}}
+                                                </small>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        
+                    </div>
+                </div>
+            </div>
+        {% else %}
+        <div>
+            <h4 class="text-center text-muted">Product not found!!</h4>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock section %}
+
+{% block profile_img %}
+      <img
+        src="{{profile.profile_pic.url}}"
+        class="rounded-circle"
+        height="25px"
+        alt="Profile Pic"
+      />
+{% endblock profile_img %}

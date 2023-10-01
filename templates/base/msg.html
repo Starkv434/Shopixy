@@ -1,0 +1,14 @@
+{% if messages %} 
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+      {{message}}
+      {% if link_sent %}
+        <a href="https://mail.google.com/">Click here to reset your password!!</a>
+      {% endif %}
+      {% if new_acc %}
+          <a href="https://mail.google.com/">Please check your email to verify it.</a>
+      {% endif %}
+      <br>
+    </div>
+  {% endfor %} 
+{% endif %}
