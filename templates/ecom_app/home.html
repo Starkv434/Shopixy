@@ -1,0 +1,104 @@
+{% extends 'base/base.html' %}
+
+
+
+{% load static %}
+
+
+{% block section %}
+
+<div id="carouselExampleAutoplaying" class="carousel slide hero-section" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'ecom_app/images/banner/b1.jpg' %}" class="d-block w-100" alt="Product Image">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'ecom_app/images/banner/b2.jpg' %}" class="d-block w-100" alt="Product Image">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'ecom_app/images/banner/b3.jpg' %}" class="d-block w-100" alt="Product Image">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'ecom_app/images/banner/b4.jpg' %}" class="d-block w-100" alt="Product Image">
+    </div>
+  </div>
+
+
+  
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+<div class="container">
+  <div class="container grid-container">
+    <div class="grid-item grid-1">
+        <h2>Ghee</h2>
+        <div>
+            <img class="img-responsive" src="{% static 'ecom_app/images/cow-ghee.png' %}" alt="">
+        </div>
+        <a href="{% url 'category' category_name='Ghee' %}">Check it out</a>
+    </div>
+    <div class="grid-item grid-2">
+        <h2>Curd</h2>
+        <div>
+            <img class="img-responsive" src="{% static 'ecom_app/images/curd-premium.png' %}" alt="">
+        </div>
+        <a href="{% url 'category' category_name='Curd' %}">Check it out</a>
+    </div>
+    <div class="grid-item grid-3">
+        <h2>Kulfi</h2>
+        <div>
+            <img class="img-responsive" src="{% static 'ecom_app/images/kulfi.png' %}" alt="">
+        </div>
+        <a href="{% url 'category' category_name='Kulfi' %}">Check it out</a>
+    </div>
+    <div class="grid-item grid-4">
+        <h2>Milkshake</h2>
+        <div>
+            <img class="img-responsive" src="{% static 'ecom_app/images/milk-shake-chocolate.png' %}" alt="">
+        </div>
+        <a href="{% url 'category' category_name='Milkshake' %}">Check it out</a>
+    </div>
+    <div class="grid-item grid-5">
+        <h2>Cheese</h2>
+        <div>
+            <img class="img-responsive" src="{% static 'ecom_app/images/paneer-fresh.png' %}" alt="">
+        </div>
+        <a href="{% url 'category' category_name='Paneer' %}">Check it out</a>
+    </div>
+    <div class="grid-item grid-6">
+        <h2>Cheese</h2>
+        <div>
+            <img class="img-responsive" src="{% static 'ecom_app/images/processedcheese.png' %}" alt="">
+        </div>
+        <a href="{% url 'category' category_name='Paneer' %}">Check it out</a>
+    </div>
+    <div class="grid-item grid-7">
+        <h2>Kulfi</h2>
+        <div>
+            <img class="img-responsive" src="{% static 'ecom_app/images/kulfi.png' %}" alt="">
+        </div>
+        <a href="{% url 'category' category_name='Kulfi' %}">Check it out</a>
+    </div>
+    <div class="grid-item grid-8">
+        <h2>Milk</h2>
+        <div>
+            <img class="img-responsive" src="{% static 'ecom_app/images/cow-milk.png' %}" alt="">
+        </div>
+        <a href="{% url 'category' category_name='Milk' %}">Check it out</a>
+    </div> 
+  </div>
+</div>
+{% endblock section %}
+
+
+{% block profile_img %}
+      <img src="{{profile.profile_pic.url}}" class="rounded-circle" height="25px" alt="Profile Pic" loading="lazy"/>
+{% endblock profile_img %}

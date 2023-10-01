@@ -1,0 +1,119 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+{% block title %}Product Details{% endblock title %}
+
+{% block style %}
+<style>
+    body{
+        background:#FBFCFC;  
+    }
+
+    .section{
+        display:flex;
+        justify-content:space-between;
+    }
+
+    .productdetail{
+        width:620px;
+        height:650px;
+        background-color:white;
+        position: relative;
+        top: 120px;
+        left: -45px;
+        padding:20px;
+    }
+
+
+    .prod_box{
+        display:flex;
+        width:550px;
+        height: 650px;
+        top:70px;
+        left:100px;
+        text-align: center;
+    }
+    
+    .card_img{
+        position: relative;
+        left:110px;
+        width:250px;
+        height:300px;
+    }
+
+    .card_content{
+        margin-top: 15px;
+    }
+
+    .buttons{
+        display:flex;
+    }
+
+    .prod_btn{
+        margin-top:45px;
+        width:15rem;
+    }
+
+    footer{
+        position: relative;
+        top: 75px;
+    }
+
+</style>
+{% endblock style %}
+{% block section %}
+<div class="section">
+    <div class="prod_box mt-5 position-relative">
+        <div class="container card ms-5 mt-5" style="width: 500px; height:500px ; box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;">
+            <img src="{{product.prod_image.url}}" class="card_img mt-5" alt="Product Image" width="100px" height="200px">
+            
+            {% if wishlist %}
+                <a pid={{product.uid}} class="minus-wishlist btn btn-danger shadow px-5 py-2 ms-5 w-50"><i class="fas fa-heart fa-lg"></i></a>
+            {% else %}
+                <a pid={{product.uid}} class="plus-wishlist btn btn-success shadow px-5 py-2 ms-5 w-50"><i class="fas fa-heart fa-lg"></i></a>        
+            {% endif %} 
+        </div>
+        
+    </div>
+
+    <div class="productdetail col-lg-5 border-start">
+        <h3 class='fs-sm'>{{product.product_name}}<span>({{product.quantity}})</span></h3>
+        <p class="fs-sm">{{product.description}}</p>
+        <br>
+        <h4>Composition:</h4>
+        <p class="fs-sm">{{product.composition}}</p>
+        <br>
+        <div class="d-flex">
+            <h4>Price:</h4>&nbsp;
+        {% if product.discounted_price == 0.0 %}
+            <span class="fs-5" >Rs.{{product.selling_price}}/-</span>
+        {% else %}
+            <strong  class="fs-5">{{product.discounted_price}}/-</strong>
+            <span class="text-muted">
+                <del class="fs-5">{{product.selling_price}}</del>
+            </span>
+        {% endif %}     
+        </div>
+        <p>
+        </p>
+        <div class="buttons">
+            <div class="card_content card-body">
+                <a href="{% url 'add_to_cart' uid=product.uid %}" class="btn btn-primary prod_btn"><i class="fa-solid fa-cart-shopping" style="color: #ffffff;"></i>&nbsp;Add to Cart</a>
+            </div>
+            <div class="card_content card-body">
+                <a href="{% url 'show_cart' %}" class="btn btn-warning prod_btn">Buy Now</a>
+                
+            </div>
+        </div>   
+    </div>
+</div>
+{% endblock section %}
+
+{% block profile_img %}
+      <img
+        src="{{profile.profile_pic.url}}"
+        class="rounded-circle"
+        height="25px"
+        alt="Profile Pic"
+      />
+{% endblock profile_img %}

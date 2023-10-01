@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+
+{% block title %}My Profile{% endblock title %}
+
+{% block style %}
+    <style>
+        body{
+            min-height:100vh;
+        }
+
+        .my_card { 
+            position: relative;
+            width: 450px;
+            height:700px;
+            top: 65px;
+        }
+
+        body {
+            background-color: #eee;
+          }
+      
+        .pic{
+            margin:30px;
+            width:400px;
+            height:300px;
+            position: relative;
+            top:50px;
+        }
+
+        .upper{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            position: relative;
+            left:45px;
+            width:600px;
+            padding:20px;
+        }
+      
+        footer {
+            position: relative;
+            top: 75px;
+        }
+    </style>
+{% endblock style %}
+
+
+{% block section %}
+    <div class="d-flex justify-content-center w-100">
+        <div class="card my_card mt-5 w-50 p-5">
+            {% include 'base/msg.html' %}
+            <div class="upper">
+                <div class="welcome  w-75">
+                    <h1>Welcome <br>{{my_details.user}}</h1>
+                </div>
+                <div class="w-75">
+                    <img class="img-account-profile rounded-circle mb-2 w-100" src="{{my_details.profile_pic.url}}" alt="Profile Pic">
+                </div>
+            </div>
+            <hr>
+            <div class="about fs-sm">
+                <h4>Name: <span class="fs-sm fw-light">{{my_details.name}}</span></h4>
+                <h4>State: <span class="fs-sm fw-light">{{my_details.state}}</span></h4>
+                <h4>City: <span class="fs-sm fw-light">{{my_details.city}}</span></h4>
+                <h4>Landmark: <span class="fs-sm fw-light">{{my_details.landmark}}</span></h4>
+                <h4>Contact No: <span class="fs-sm fw-light">{{my_details.phone}}</span></h4>
+            </div>
+            <div class="btn">
+                <button type="button" class="btn btn-primary w-25"><a class="text-decoration-none" style="cursor: pointer; color: #fff;"href="{% url 'update_existing_profile' %}">Update Profile</a></button>
+            </div>
+        </div>
+    </div>
+{% endblock section %}

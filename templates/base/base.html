@@ -1,0 +1,183 @@
+d<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopKit | {% block title %}{% endblock title %}</title>
+
+    
+    <link rel="icon" type="image" href="{% static 'favicon.ico' %}" />
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"/>
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+    <link rel="stylesheet" href="{% static 'ecom_app/css/all.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'ecom_app/css/owl.carousel.min.css' %}"/>
+    <script src="https://kit.fontawesome.com/919c549472.js" crossorigin="anonymous"></script>
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+ 
+                           
+   
+    {% block style %}{% endblock style %}
+    
+  </head>
+  <body>
+    
+    <div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px; height: 65px;" id="topnav">
+      <div class="container-fluid">
+        <a class="navbar-brand ms-5" href="{% url 'home' %}">
+          <img src="{% static 'ecom_app/images/logo.png' %}" alt="Shopixy" width="135px" height="60px"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+          <form action="{% url 'search' %}" class="d-flex w-75 p-3 ms-3" role="search">
+            <input class="form-control me-2" type="search" name="search" style="border:none; background-color: #D6EAF8; height:35px;" placeholder="Search" aria-label="Search"/>
+            <button class="btn btn-outline-success" type="submit">Search</button >
+          </form>
+
+          <div class="d-flex w-50 justify-content-end">
+            <ul class="navbar-nav mb-2 mb-lg-0 me-5">
+              <li class="nav-item mx-4">
+                <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+              </li>
+              <li class="nav-item dropdown mx-4">
+                <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Products</button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'category' category_name='Milk' %}">Milk</a></li>
+                  <li><a class="dropdown-item" href="{% url 'category' category_name='Curd' %}">Curd</a></li>
+                  <li><a class="dropdown-item" href="{% url 'category' category_name='Milkshake' %}">Milkshake</a></li>
+                  <li><a class="dropdown-item" href="{% url 'category' category_name='Ice-cream' %}">Ice-cream</a></li>
+                  <li><a class="dropdown-item" href="{% url 'category' category_name='Kulfi' %}">Kulfi</a></li>
+                  <li><a class="dropdown-item" href="{% url 'category' category_name='Ghee' %}">Ghee</a></li>
+                  <li><a class="dropdown-item" href="{% url 'category' category_name='Paneer' %}">Paneer</a></li>
+                </ul>
+              </li>
+              <li class="nav-item mx-4">
+                <a class="nav-link active" aria-current="page" href="{% url 'show_cart' %}">
+                  {% if total_item > 0 %}
+                    <span class="badge badge-pill bg-danger">
+                    {{total_item}}
+                    </span>
+                  {% endif %}
+                  <span><i class="fas fa-shopping-cart"></i></span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          {% comment %} <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{request.user.profile.profile_pic.url}}</button> {% endcomment %}
+
+            {% if request.user.is_authenticated %}
+              <ul class="navbar-nav mb-2 mb-lg-0 me-5">
+                <li class="nav-item dropdown">      
+                  <button class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% block profile_img %}
+                    
+                    {% endblock profile_img %}   
+                  </button>               
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'update_profile' %}">Profile</a>
+                    <a class="dropdown-item" href="{% url 'orders' %}">Orders</a>
+                    <a class="dropdown-item" href="{% url 'show_wishlist' %}">Wishlist</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                  </div>
+                </li>
+              </ul> 
+            {% else %}
+              <a class="nav-link active text-danger w-25" aria-current="page" href="{% url 'register' %}">Sign Up</a>
+            {% endif %}
+        
+        </div>
+      </div>
+    </nav>
+  </div>
+
+    {% block section %}
+    
+    {% endblock section %}
+
+
+    {% block payment_gateway %}{% endblock payment_gateway %}
+
+    
+    <footer>
+        <div class="back-to-top">
+          <a href="#">
+            <i class="fa-solid fa-forward fa-rotate-270 fa-lg" style="color: #ffffff;"></i>
+          </a>
+        </div>
+
+        <div class="middle-footer">
+            <div class="footer-box">
+                <div class="list">
+                    <ul>
+                        <li class="head">About</li>
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-box">
+                <div class="list">
+                    <ul>
+                        <li class="head">Make Money with Us</li>
+                        <li><a href="#">Sell products on Amazon</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-box">
+                <div class="list">
+                    <ul>
+                        <li class="head">Amazon Payment Products</li>
+                        <li><a href="#">Amazon Business Card</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-box">
+                <div class="list">
+                    <ul>
+                        <li class="head">Let Us Help You</li>
+                        <li><a href="#">Your Account</a></li>
+                        <li><a href="#">Your Orders</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+       
+        <div class="copyright-panel">
+            <div class="upper-part">
+                <a href="#">Conditions of Use Sale</a>
+                <a href="#">Privacy Notice</a>
+                <a href="#">Interest-Based Ads</a>
+            </div>
+            <div class="last-panel">
+                <span>&copy; 1996-2023, Shopixy.com, Inc. or its affiliat</span>
+            </div>
+        </div>
+    </footer> 
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{% static 'ecom_app/js/all.min.js' %}"></script>
+    <script src="{% static 'ecom_app/js/myscript.js' %}"></script>
+    <script src="{% static 'ecom_app/js/owl.carousel.min.js' %}"></script>
+  </body>
+</html>

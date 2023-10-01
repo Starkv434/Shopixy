@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %} 
+{% load static %} 
+
+{% block title %}Category{% endblock title %} 
+
+{% block style %}
+<style>
+  body {
+    background-color: #fbfcfc;
+  }
+</style>
+{% endblock style %} {% block section %}
+<div class="d-flex container my-5">
+  <div class="list-group mt-5">
+    {% for product in products %}
+    <a
+      href="{% url 'specific_product' product_name=product.product_name %}"
+      style="color: black; text-decoration: none"
+    >
+      <button
+        type="button"
+        style="border-radius: 7px"
+        class="list-group-item list-group-item-action"
+        aria-current="true"
+      >
+        {{product.product_name}}
+      </button>
+    </a>
+    {% endfor %}
+  </div>
+
+  <div class="col-sm-9 mt-5">
+    <div class="row">
+      {% for prod in all_products %}
+      <div class="col text-center">
+        <a href="{% url 'product' uid=prod.uid %}" class="btn">
+          <div class="container mt-5">
+            <img
+              src="{{prod.prod_image.url}}"
+              alt="Product Image"
+              width="210px"
+              height="170px"
+            />
+            <div class="fw-bold">{{prod.product_name}}</div>
+            <div class="fw-bold text-success">
+              {% if prod.discounted_price == 0.0 %} 
+                Rs.{{prod.selling_price}} 
+              {% else %} 
+                Rs.{{prod.discounted_price}}/-
+              <small class="fw-light text-danger text-decoration-line-through">
+                {{prod.selling_price}}
+              </small>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock section %}
+
+{% block profile_img %}
+      <img
+        src="{{profile.profile_pic.url}}"
+        class="rounded-circle"
+        height="25px"
+        alt="Profile Pic"
+      />
+{% endblock profile_img %}

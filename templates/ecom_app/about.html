@@ -1,0 +1,103 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block title %}About Us{% endblock title%}
+
+{% block style %}
+    <style>
+        body{
+            background-color: #FBFCFC;
+        }
+
+        .about_sec, .mission{
+            position: relative;
+            top: 50px;
+            text-align: justify;
+        }
+
+        .img_sec{
+            position: relative;
+            top: 100px;
+
+        }
+
+        .mission{
+            position: relative;
+            top: 100px;
+            text-align: justify;
+        }
+
+
+        footer{
+            position: relative;
+            top: 75px;
+        }
+    </style>
+{% endblock style %}
+
+
+{% block section %}
+
+<div class="container mt-5">
+
+    <div class="about_sec d-flex">
+        <div class="img_sec w-50 h-50">
+            <div id="carouselExampleAutoplaying" class="carousel slide hero-section" data-bs-ride="carousel">
+                <div class="carousel-inner ">
+                  <div class="carousel-item active">
+                    <img src="{% static 'ecom_app/images/banner/b1.jpg' %}" class="d-block w-100" alt="Product Image">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="{% static 'ecom_app/images/banner/b2.jpg' %}" class="d-block w-100" alt="Product Image">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="{% static 'ecom_app/images/banner/b3.jpg' %}" class="d-block w-100" alt="Product Image">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="{% static 'ecom_app/images/banner/b4.jpg' %}" class="d-block w-100" alt="Product Image">
+                  </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </div>
+        <div class="about_content ms-5 w-50">
+            <h2 class="text-center">About Us</h2>
+            <br>
+            <div class="row container">
+                <p class="fs-5">
+                    Welcome to the world of Shopixy, where pure goodness meets exceptional taste. Our journey began with a simple yet profound idea: to provide families with the highest quality dairy products that are not only nourishing but also delicious. Established with a commitment to excellence, Shopixy has quickly become a trusted name in the dairy industry, offering a wide range of dairy delights that cater to the diverse preferences of our valued customers.
+                    At the heart of Shopixy's success lies our unwavering dedication to quality. Our dairy farms are a testament to this commitment, where our happy and healthy cows graze on lush pastures, producing the finest milk that forms the foundation of our products. From farm to table, every step of our production process is meticulously managed to ensure that the nutritional integrity and rich flavors are preserved in every product we offer.
+                </p>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="mission">
+        <h2 class="text-center">Mission</h2>
+        <br>
+        <div class="row container"></div>
+        <p class="fs-5 text-center">
+            Shopixy isn't just a dairy company; it's a promise of a wholesome lifestyle. We understand the importance of nourishing our bodies with the best nature has to offer, and that's why we pour our heart and soul into every product. Whether you're enjoying a dollop of our cream on your morning pancakes or savoring the subtle tang of our cottage cheese in your favorite recipes, you're experiencing the essence of purity that Shopixy stands for.
+            Join us in celebrating the joy of good food and great health. With Shopixy, every bite is a step towards a life enriched by the goodness of nature's bounty. Discover dairy delights like never before – discover Shopixy.
+        </p>
+    </div>
+</div>
+{% endblock section %}
+
+{% block profile_img %}
+      <img
+        src="{{profile.profile_pic.url}}"
+        class="rounded-circle"
+        height="25px"
+        alt="Profile Pic"
+      />
+{% endblock profile_img %}

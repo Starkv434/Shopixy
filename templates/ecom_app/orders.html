@@ -1,0 +1,105 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Orders{% endblock title %}
+
+{% block style %}
+    <style>
+        body{
+            background-color: #FBFCFC;
+            min-height: 100vh;
+        }
+
+        .main{
+            display:flex;
+
+        }
+        
+
+        .mainmenu {
+            display:flex;
+            flex-direction: column;
+            width:250px;
+            margin-left: 45px;
+            margin-right:30px;
+        }
+
+        footer{
+            position: relative;
+            top: 250px;
+        }
+    
+        
+    </style>
+{% endblock style %}
+
+
+{% block section %}
+<div class="main my-5">
+    <div class="mainmenu">
+        <div class="name">
+            <h3>Welcome <span class="text-capitalize">{{request.user}}</span></h3>
+        </div>
+        
+        <div class="col border-end">
+            <ul class="list-unstyled">
+                <li class="d-grid ms-4">
+                    <a href="{% url 'orders' %}" class="btn btn-primary w-50 ms-5">Orders</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="">
+        <div class="col-sm-12 border-bottom">
+            {% for op in orders %}
+                <div class="row my-5">
+                    <div class="col-sm">
+                        <img src="{{op.product.prod_image.url}}" alt="product image" class="img-fluid" height="400" width="400">
+                    </div>
+                    <div class="col-sm-7">
+                        <p>Product : {{op.product.product_name}}</p>
+                        <p>No of Items: {{op.no_of_items}}</p>
+                        <p>Price: {{op.total_cost}}</p>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <p>Order Status: {{op.status}}</p>
+                        {% if op.status == "Accepted" %}
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width:20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        {% endif %}
+                        {% if op.status == "Packed" %}
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width:45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        {% endif %}
+                        {% if op.status == "On The Way" %}
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width:75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        {% endif %}
+                        {% if op.status == "Delivered" %}
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width:100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        {% endif %}
+                        {% if op.status == "Cancel" %}
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width:0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock section %}
+
+
+{% block profile_img %}
+      <img src="{{profile.profile_pic.url}}" class="rounded-circle" height="25px" alt="Profile Pic" loading="lazy"/>
+{% endblock profile_img %}

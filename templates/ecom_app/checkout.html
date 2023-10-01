@@ -1,0 +1,139 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us{% endblock title %}
+
+
+{% block style %}
+    <style>
+        body{
+            min-height: 100vh;
+            background-color: #FBFCFC;
+        }
+
+        footer{
+            position: relative;
+            top: 141px;
+            bottom:0;
+        }
+    
+        
+    </style>
+{% endblock style %}
+
+{% block section %}
+    <div class="container">
+        {% include "base/msg.html" %}
+
+        <div class="row mt-5">
+            <div class="col mb-2">
+                <h4>Order Summary</h4>
+                <hr>
+                {% for item in cart_items %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h5>Product: {{item.product.title}}</h5>
+                            <p>No of Items: {{item.no_of_items}}</p>
+                            <p class="fw-bold">
+                                Price: 
+                                {% if item.product.discounted_price == 0 %}
+                                    {{item.product.selling_price}}
+                                {% else %}
+                                    {{item.product.discounted_price}}
+                                {% endif %} 
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <p class="fw-bold">
+                    Total Cost + Rs. 40 = {{total_amount}}
+                </p>
+                <small>Terms and Conditions applied.</small>
+            </div>
+            <div class="col-sm-4 offset-sm-1">
+                <h4>Shipping Address</h4>
+                <hr>
+                <form id="myform">
+                    {% comment %} {% csrf_token %} {% endcomment %}
+
+                        
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>{{add.name}}</h5>
+                                <p>Mobile: {{add.phone}}</p>
+                                <p>{{add.locality}} {{add.city}},{{add.state}} - {{add.pincode}}</p>
+                                <p>Landmark: {{add.landmark}}</p>
+                            </div>
+                        </div>
+                        <input class="form-check-input" type="checkbox" name="profile_uid" id="profile_uid" value="{{add.uid}}">
+                    
+
+                    <div class="form-check m-3">
+                        <label for="amount">Total Amount</label>
+                        <input type="number" id="amount" class="form-control" name="amount" value = {{total_amount}} readonly>
+                    </div>
+                    <div class="text-end">
+                        <button id="rzp-button1" type="submit" class="btn btn-warning mt-3 px-5 fw-boldd">Pay Now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block payment_gateway %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#rzp-button1").click(function(e) {
+            e.preventDefault(); // Prevent the default form submission
+            
+            // Get the amount entered by the user
+            const amount = $("#amount").val();
+
+            var profile_uid = $("#profile_uid").val();
+
+            // Make an AJAX request to initiate the payment
+            $.ajax({
+                type: "POST",
+                url: "/checkout/",
+                data: { amount: amount },
+                dataType: "json",
+                
+                success: function(data) {
+                    // Initialize Razorpay Checkout with the received values
+                    const options = {
+                        key: data.key,
+                        amount: data.amount,
+                        currency: data.currency,
+                        order_id: data.id,
+                        name: data.name,
+                        description: data.description,
+                        handler: function(response) {
+                            var form = document.getElementById("myform");
+                            // Handle the payment success or failure and redirect accordingly
+                            if (response.razorpay_payment_id) {
+                                // Payment successful, redirect to the success URL
+                                window.location.href = `http://127.0.0.1:8000/payment_success?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}&profile_uid=${profile_uid}`;
+                            } else {
+                                // Payment failed or canceled, redirect to the failure URL
+                                window.location.href = "//127.0.0.1:8000/payment_failed/";
+                            }
+                        }
+                    };
+
+                    const rzp = new Razorpay(options);
+                    rzp.open();
+                },
+                error: function(error) {
+                    console.error("Error initiating payment:", error);
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock payment_gateway %}
